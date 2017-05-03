@@ -1,0 +1,181 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta charset="utf-8">
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="-1" />
+<!--
+   Note to customizers: the body of the webrev is IDed as SUNWwebrev
+   to allow easy overriding by users of webrev via the userContent.css
+   mechanism available in some browsers.
+
+   For example, to have all "removed" information be red instead of
+   brown, set a rule in your userContent.css file like:
+
+       body#SUNWwebrev span.removed { color: red ! important; }
+-->
+<style type="text/css" media="screen">
+body {
+    background-color: #eeeeee;
+}
+hr {
+    border: none 0;
+    border-top: 1px solid #aaa;
+    height: 1px;
+}
+div.summary {
+    font-size: .8em;
+    border-bottom: 1px solid #aaa;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+div.summary h2 {
+    margin-bottom: 0.3em;
+}
+div.summary table th {
+    text-align: right;
+    vertical-align: top;
+    white-space: nowrap;
+}
+span.lineschanged {
+    font-size: 0.7em;
+}
+span.oldmarker {
+    color: red;
+    font-size: large;
+    font-weight: bold;
+}
+span.newmarker {
+    color: green;
+    font-size: large;
+    font-weight: bold;
+}
+span.removed {
+    color: brown;
+}
+span.changed {
+    color: blue;
+}
+span.new {
+    color: blue;
+    font-weight: bold;
+}
+a.print { font-size: x-small; }
+
+</style>
+
+<style type="text/css" media="print">
+pre { font-size: 0.8em; font-family: courier, monospace; }
+span.removed { color: #444; font-style: italic }
+span.changed { font-weight: bold; }
+span.new { font-weight: bold; }
+span.newmarker { font-size: 1.2em; font-weight: bold; }
+span.oldmarker { font-size: 1.2em; font-weight: bold; }
+a.print {display: none}
+hr { border: none 0; border-top: 1px solid #aaa; height: 1px; }
+</style>
+
+<title>jdk Sdiff src/java.desktop/share/classes/java/awt </title>
+</head><body id="SUNWwebrev">
+<h2>src/java.desktop/share/classes/java/awt/Component.java</h2>
+<a class="print" href="javascript:print()">Print this page</a>
+<pre></pre>
+
+<table><tr valign="top">
+<td><pre>
+
+</pre><hr></hr><pre>
+3426                     height += y;
+3427                     y = 0;
+3428                 }
+3429 
+3430                 int pwidth = (width &gt; this.width) ? this.width : width;
+3431                 int pheight = (height &gt; this.height) ? this.height : height;
+3432 
+3433                 if (pwidth &lt;= 0 || pheight &lt;= 0) {
+3434                     return;
+3435                 }
+3436 
+3437                 int px = this.x + x;
+3438                 int py = this.y + y;
+3439                 parent.repaint(tm, px, py, pwidth, pheight);
+3440             }
+3441         } else {
+3442             if (isVisible() &amp;&amp; (this.peer != null) &amp;&amp;
+3443                 (width &gt; 0) &amp;&amp; (height &gt; 0)) {
+3444                 PaintEvent e = new PaintEvent(this, PaintEvent.UPDATE,
+3445                                               new Rectangle(x, y, width, height));
+<span class="changed">3446                 SunToolkit.postEvent(SunToolkit.targetToAppContext(this), e);</span>
+3447             }
+3448         }
+3449     }
+3450 
+3451     /**
+3452      * Prints this component. Applications should override this method
+3453      * for components that must do special processing before being
+3454      * printed or should be printed differently than they are painted.
+3455      * &lt;p&gt;
+3456      * The default implementation of this method calls the
+3457      * {@code paint} method.
+3458      * &lt;p&gt;
+3459      * The origin of the graphics context, its
+3460      * ({@code 0},&amp;nbsp;{@code 0}) coordinate point, is the
+3461      * top-left corner of this component. The clipping region of the
+3462      * graphics context is the bounding rectangle of this component.
+3463      * @param     g   the graphics context to use for printing
+3464      * @see       #paint(Graphics)
+3465      * @since     1.0
+3466      */
+
+</pre><hr></hr>
+</pre></td><td><pre>
+
+</pre><hr></hr><pre>
+3426                     height += y;
+3427                     y = 0;
+3428                 }
+3429 
+3430                 int pwidth = (width &gt; this.width) ? this.width : width;
+3431                 int pheight = (height &gt; this.height) ? this.height : height;
+3432 
+3433                 if (pwidth &lt;= 0 || pheight &lt;= 0) {
+3434                     return;
+3435                 }
+3436 
+3437                 int px = this.x + x;
+3438                 int py = this.y + y;
+3439                 parent.repaint(tm, px, py, pwidth, pheight);
+3440             }
+3441         } else {
+3442             if (isVisible() &amp;&amp; (this.peer != null) &amp;&amp;
+3443                 (width &gt; 0) &amp;&amp; (height &gt; 0)) {
+3444                 PaintEvent e = new PaintEvent(this, PaintEvent.UPDATE,
+3445                                               new Rectangle(x, y, width, height));
+<span class="changed">3446                Toolkit.getEventQueue().postEvent(e);</span>
+3447             }
+3448         }
+3449     }
+3450   
+3451     /**
+3452      * Prints this component. Applications should override this method
+3453      * for components that must do special processing before being
+3454      * printed or should be printed differently than they are painted.
+3455      * &lt;p&gt;
+3456      * The default implementation of this method calls the
+3457      * {@code paint} method.
+3458      * &lt;p&gt;
+3459      * The origin of the graphics context, its
+3460      * ({@code 0},&amp;nbsp;{@code 0}) coordinate point, is the
+3461      * top-left corner of this component. The clipping region of the
+3462      * graphics context is the bounding rectangle of this component.
+3463      * @param     g   the graphics context to use for printing
+3464      * @see       #paint(Graphics)
+3465      * @since     1.0
+3466      */
+
+</pre><hr></hr>
+</pre></td>
+</tr></table>
+</body></html>

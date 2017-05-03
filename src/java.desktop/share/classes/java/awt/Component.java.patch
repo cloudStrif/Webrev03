@@ -1,0 +1,16 @@
+--- old/src/java.desktop/share/classes/java/awt/Component.java	2017-04-29 15:13:42.302989061 +0200
++++ new/src/java.desktop/share/classes/java/awt/Component.java	2017-04-29 15:13:42.090987051 +0200
+@@ -3443,11 +3443,11 @@
+                 (width > 0) && (height > 0)) {
+                 PaintEvent e = new PaintEvent(this, PaintEvent.UPDATE,
+                                               new Rectangle(x, y, width, height));
+-                SunToolkit.postEvent(SunToolkit.targetToAppContext(this), e);
++               Toolkit.getEventQueue().postEvent(e);
+             }
+         }
+     }
+-
++  
+     /**
+      * Prints this component. Applications should override this method
+      * for components that must do special processing before being
